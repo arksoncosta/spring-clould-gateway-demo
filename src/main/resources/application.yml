@@ -1,0 +1,24 @@
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: test
+          uri: http://localhost:8081
+          predicates:
+            - Path=/test
+          filters:
+            - RequestHashing=SHA-256
+        - id: service_route
+          uri: http://localhost:8081
+          predicates:
+            - Path=/service/**
+          filters:
+            - RewritePath=/service(?<segment>/?.*), $\{segment}
+            - Logging=My custom message, true, true
+            - Locale=pt_BR
+            - LocaleResponse
+
+logging:
+  level:
+    org.springframework.cloud.gateway: DEBUG
+    reactor.netty.http.client: DEBUG
