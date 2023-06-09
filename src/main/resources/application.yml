@@ -17,6 +17,14 @@ spring:
             - Logging=My custom message, true, true
             - Locale=pt_BR
             - LocaleResponse
+        - id: new_employee
+          uri: http://localhost:8081
+          predicates:
+            - Path=/employees
+            - Method=POST
+          filters:
+            - Logging=My custom message, true, true
+            - EmptyRequestBody
 
 logging:
   level:
